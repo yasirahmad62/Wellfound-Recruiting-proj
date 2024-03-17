@@ -1,20 +1,74 @@
 package com.example.wellfoundrecruiting
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        auth = FirebaseAuth.getInstance()
+
+        val editTextEmail = findViewById<EditText>(R.id.editTextEmail)
+        val editTextPassword = findViewById<EditText>(R.id.editTextPassword)
+        val buttonLogin = findViewById<Button>(R.id.buttonLoginPage)
+        val textViewRegisterPrompt = findViewById<TextView>(R.id.textViewRegisterPrompt)
+        textViewRegisterPrompt.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
+        buttonLogin.setOnClickListener {
+            val email = editTextEmail.text.toString()
+            val password = editTextPassword.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            val user = auth.currentUser
+                            val database = FirebaseDatabase.getInstance()
+                            val userRef = database.getReference("users").child(user!!.uid)
+                            userRef.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    val firstName = dataSnapshot.child("firstName").getValue(String::class.java)
+                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    intent.putExtra("firstName", firstName)
+                                    startActivity(intent)
+                                    finish()
+                                }
+
+                                override fun onCancelled(databaseError: DatabaseError) {
+                                    // Handle errors
+                                }
+                            })
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login failed: ${task.exception?.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Please enter email and password",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }

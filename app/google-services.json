@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "55123897060",
+    "project_id": "wellfoundrecruiting",
+    "storage_bucket": "wellfoundrecruiting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55123897060:android:afad1766592446a697daf1",
+        "android_client_info": {
+          "package_name": "com.example.wellfoundrecruiting"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8JWWuV3iyF96NlKOnblTMN9zzYcHfSi4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
