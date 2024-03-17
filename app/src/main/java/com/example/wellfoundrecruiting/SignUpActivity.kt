@@ -38,7 +38,7 @@ class SignUpActivity : AppCompatActivity() {
                             if (user != null) {
                                 val database = FirebaseDatabase.getInstance()
                                 val userRef = database.getReference("users").child(user.uid)
-                                userRef.child("firstName").setValue(firstName)
+                                userRef.child("name").setValue(firstName)
                             } else {
                                 Toast.makeText(
                                     this@SignUpActivity,

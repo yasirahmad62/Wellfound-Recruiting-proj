@@ -2,7 +2,7 @@ package com.example.wellfoundrecruiting
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,20 +25,24 @@ class CandidateActivity : AppCompatActivity() {
         adapter = CandidateAdapter(candidates)
         recyclerView.adapter = adapter
         val floatingHomeBtn = findViewById<FloatingActionButton>(R.id.floatingHomeBtn)
-        database = FirebaseDatabase.getInstance().getReference("candidates")
+        database = FirebaseDatabase.getInstance().getReference("users")
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 candidates.clear()
                 for (candidateSnapshot in snapshot.children) {
-                    val candidate = candidateSnapshot.getValue(Candidate::class.java)
-                    candidate?.let { candidates.add(it) }
+                    // Following the logic to show just the randomly populated data in the data base
+                    if (candidateSnapshot.key?.startsWith("candidate_id") == true) {
+                        val candidate = candidateSnapshot.getValue(Candidate::class.java)
+                        candidate?.let { candidates.add(it) }
+                    }
                 }
                 adapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error
+                Toast.makeText(this@CandidateActivity, "Database error occurred", Toast.LENGTH_SHORT).show()
             }
+
         })
         floatingHomeBtn.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
