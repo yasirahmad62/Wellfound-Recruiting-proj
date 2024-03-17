@@ -1,9 +1,12 @@
 package com.example.wellfoundrecruiting
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
 
 class CandidateActivity : AppCompatActivity() {
@@ -21,7 +24,7 @@ class CandidateActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = CandidateAdapter(candidates)
         recyclerView.adapter = adapter
-
+        val floatingHomeBtn = findViewById<FloatingActionButton>(R.id.floatingHomeBtn)
         database = FirebaseDatabase.getInstance().getReference("candidates")
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -37,5 +40,8 @@ class CandidateActivity : AppCompatActivity() {
                 // Handle database error
             }
         })
+        floatingHomeBtn.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 }

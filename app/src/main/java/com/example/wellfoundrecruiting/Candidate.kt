@@ -4,7 +4,7 @@ data class Candidate(
     val id: String = "",
     val name: String = "",
     val title: String = "",
-    val photoUrl: String = "",
+    val photo_url: String = "",
     val city: String = "",
     val educationHistory: EducationHistory = EducationHistory()
 ) {

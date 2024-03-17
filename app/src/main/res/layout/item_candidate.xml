@@ -3,25 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="16dp"
+    android:background="#fff">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:id="@+id/userImageView"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/app_logo"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
+          />
+    </FrameLayout>
     <TextView
         android:id="@+id/nameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="21sp"
-        android:textStyle="bold"/>
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
 
-    <TextView
-        android:id="@+id/cityTextView"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/location_pin"
+            android:backgroundTint="#d94242"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/titleCityView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <!-- Job Role -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textStyle="italic"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/jobRoleIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/job_icon"
+            android:backgroundTint="#d94242"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d94242"
+        android:layout_marginTop="8dp"/>
+
 </LinearLayout>
