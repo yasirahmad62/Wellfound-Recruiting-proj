@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WellFoundRecruiting</string>
+    <string name="education_info">Education: %1$s\nUniversity: %2$s\nGraduation Year: %3$d</string>
 </resources>

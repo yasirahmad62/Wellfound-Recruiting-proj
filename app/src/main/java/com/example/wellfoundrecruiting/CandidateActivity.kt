@@ -1,4 +1,5 @@
 package com.example.wellfoundrecruiting
+import Candidate
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -29,7 +30,6 @@ class CandidateActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 candidates.clear()
                 for (candidateSnapshot in snapshot.children) {
-                    // Following the logic to show just the randomly populated data in the data base
                     if (candidateSnapshot.key?.startsWith("candidate_id") == true) {
                         val candidate = candidateSnapshot.getValue(Candidate::class.java)
                         candidate?.let { candidates.add(it) }

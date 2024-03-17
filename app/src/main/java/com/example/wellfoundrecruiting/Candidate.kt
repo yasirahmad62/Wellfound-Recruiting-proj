@@ -1,4 +1,4 @@
-package com.example.wellfoundrecruiting
+import java.io.Serializable
 
 data class Candidate(
     val id: String = "",
@@ -7,7 +7,7 @@ data class Candidate(
     val photo_url: String = "",
     val city: String = "",
     val educationHistory: EducationHistory = EducationHistory()
-) {
+) : Serializable {
     constructor() : this("", "", "", "", "", EducationHistory())
 }
 
@@ -15,4 +15,4 @@ data class EducationHistory(
     val degree: String = "",
     val university: String = "",
     val graduationYear: Int = 0
-)
+) : Serializable
