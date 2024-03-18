@@ -15,7 +15,7 @@ class IntroActivity : AppCompatActivity() {
         // Delay showing the MainActivity
         Handler().postDelayed({
             // Start MainActivity
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
 
             finish()
         }, SPLASH_TIME_OUT)

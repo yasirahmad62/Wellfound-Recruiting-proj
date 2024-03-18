@@ -41,6 +41,8 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     //Stack overflow
     implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("com.firebaseui:firebase-ui-database:7.2.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

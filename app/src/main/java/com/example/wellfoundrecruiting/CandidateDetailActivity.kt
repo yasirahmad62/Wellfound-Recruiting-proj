@@ -55,10 +55,13 @@ class CandidateDetailActivity : AppCompatActivity() {
                     val userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserUid)
                     userRef.child("connections").addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            if (snapshot.exists() && snapshot.children.any { it.getValue(String::class.java) == candidateId }) {
+                            val isUserConnected = snapshot.exists() && snapshot.children.any { it.getValue(String::class.java) == candidateId }
+
+                            if (isUserConnected) {
                                 connectionStatusTextView.visibility = View.VISIBLE
                                 addConnectionButton.visibility = View.GONE
                             } else {
+                                connectionStatusTextView.visibility = View.GONE
                                 addConnectionButton.visibility = View.VISIBLE
                             }
                         }
