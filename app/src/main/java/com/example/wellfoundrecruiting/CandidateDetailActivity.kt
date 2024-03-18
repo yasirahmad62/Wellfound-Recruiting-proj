@@ -59,8 +59,6 @@ class CandidateDetailActivity : AppCompatActivity() {
                         .into(userImageView)
                 }
 
-                //
-
                 val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
                 if (currentUserUid != null) {
                     val userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserUid)
