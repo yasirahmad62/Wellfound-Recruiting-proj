@@ -8,10 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+//initialising firebase auth
         auth = FirebaseAuth.getInstance()
 
         val editTextEmail = findViewById<EditText>(R.id.editTextEmail)
@@ -30,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
         textViewRegisterPrompt.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
+        // Basic login signInWithEmailAndPassword using firebase
         buttonLogin.setOnClickListener {
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
@@ -58,3 +55,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 }
+
+// u@gmail.com
+// test@123

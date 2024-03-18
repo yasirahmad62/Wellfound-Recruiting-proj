@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Author's Name -->
     <TextView
         android:id="@+id/authorTextView"
         android:layout_width="wrap_content"
@@ -15,7 +14,11 @@
         android:layout_marginBottom="4dp"
         android:text="Posted by John Doe"/>
 
-    <!-- Title: Software Engineer Position Available at {companyName} -->
+    <View
+        android:layout_width="186dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="2dp"
+        android:background="#d94242" />
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
@@ -25,7 +28,6 @@
         android:layout_marginBottom="4dp"
         android:text="Software Engineer Position Available at Data Analytics Solutions LLC" />
 
-    <!-- Description -->
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="match_parent"
@@ -34,14 +36,12 @@
         android:layout_marginBottom="8dp"
         android:text="Join our team as a data scientist and work on cutting-edge projects."/>
 
-    <!-- Chip Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="8dp">
 
-        <!-- Location Chip Button -->
         <com.google.android.material.chip.Chip
             android:id="@+id/locationChip"
             android:layout_width="wrap_content"
@@ -50,7 +50,6 @@
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_marginEnd="8dp"/>
 
-        <!-- Salary Range Chip Button -->
         <com.google.android.material.chip.Chip
             android:id="@+id/salaryChip"
             android:layout_width="wrap_content"
@@ -59,7 +58,6 @@
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_marginEnd="8dp"/>
 
-        <!-- Time Chip Button -->
         <com.google.android.material.chip.Chip
             android:id="@+id/timestampChip"
             android:layout_width="wrap_content"
@@ -67,5 +65,6 @@
             android:text="2h ago"
             style="@style/Widget.MaterialComponents.Chip.Filter"/>
     </LinearLayout>
+
 
 </LinearLayout>

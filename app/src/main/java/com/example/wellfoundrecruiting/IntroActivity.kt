@@ -11,12 +11,10 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-
         // Delay showing the MainActivity
         Handler().postDelayed({
             // Start MainActivity
-            startActivity(Intent(this, MainActivity::class.java))
-
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, SPLASH_TIME_OUT)
     }

@@ -23,13 +23,27 @@ class PostAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostAdap
         return PostViewHolder(itemView)
     }
 
+    // taking timestamp as an input and converting it to the string based on hours and days
+    fun getTimeDifference(timestamp: Long?): String {
+        timestamp ?: return ""
+
+        val now = System.currentTimeMillis()
+        val diffInMillis = now - timestamp
+        val diffInHours = diffInMillis / (1000 * 60 * 60)
+
+        return when {
+            diffInHours < 24 -> "$diffInHours h ago"
+            diffInHours < 24 * 7 -> "${diffInHours / 24} d ago"
+            else -> "7+"
+        }
+    }
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val currentPost = posts[position]
         holder.titleTextView.text = currentPost.title
         holder.descriptionTextView.text = currentPost.description
         holder.locationChip.text = currentPost.location
         holder.salaryChip.text = currentPost.salary
-        holder.timestampChip.text = "2h ago" // Replace with actual timestamp calculation
+        holder.timestampChip.text = getTimeDifference(currentPost.timestamp)
         holder.authorTextView.text = "Posted by ${currentPost.author}"
     }
 

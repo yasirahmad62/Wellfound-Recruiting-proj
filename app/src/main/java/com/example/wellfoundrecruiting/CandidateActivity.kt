@@ -7,7 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class CandidateActivity : AppCompatActivity() {
 
@@ -26,6 +30,7 @@ class CandidateActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         val floatingHomeBtn = findViewById<FloatingActionButton>(R.id.floatingHomeBtn)
         database = FirebaseDatabase.getInstance().getReference("users")
+        // Add ValueEventListener to listen for database changes
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 candidates.clear()
@@ -35,7 +40,7 @@ class CandidateActivity : AppCompatActivity() {
                         candidate?.let { candidates.add(it) }
                     }
                 }
-                adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()// Notify adapter of data change
             }
 
             override fun onCancelled(error: DatabaseError) {

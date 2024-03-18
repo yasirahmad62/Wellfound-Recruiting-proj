@@ -1,7 +1,5 @@
 package com.example.wellfoundrecruiting
-import com.google.firebase.database.IgnoreExtraProperties
 
-@IgnoreExtraProperties
 data class Post(
     var author: String? = "",
     var benefits: List<String>? = emptyList(),

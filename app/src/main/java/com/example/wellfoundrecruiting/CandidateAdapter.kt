@@ -1,6 +1,8 @@
 package com.example.wellfoundrecruiting
+
 import Candidate
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 
 class CandidateAdapter(private val candidates: List<Candidate>) :
     RecyclerView.Adapter<CandidateAdapter.CandidateViewHolder>() {
@@ -21,9 +23,16 @@ class CandidateAdapter(private val candidates: List<Candidate>) :
 
         fun bind(candidate: Candidate) {
             // Load user image from Firebase Storage using Glide
-            Glide.with(itemView)
-                .load(candidate.photo_url) // Assuming `photoUrl` is the URL of the user image in Firebase Storage
-                .into(userImageView)
+            val storageReference = FirebaseStorage.getInstance().reference
+            println(candidate.photo_url)
+            val imageRef = storageReference.child("${candidate.photo_url}.jpeg") // Assuming images are JPEGs
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(itemView)
+                    .load(uri)
+                    .into(userImageView)
+            }.addOnFailureListener { exception ->
+                 Log.e("CandidateAdapter", "Error loading image: ${exception.message}")
+            }
 
             nameTextView.text = candidate.name
             titleTextView.text = candidate.title
@@ -31,7 +40,7 @@ class CandidateAdapter(private val candidates: List<Candidate>) :
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, CandidateDetailActivity::class.java)
-                intent.putExtra("candidate_id", candidate.id) // Pass candidate ID
+                intent.putExtra("candidate_id", candidate.id) // Passing candidate ID
                 itemView.context.startActivity(intent)
             }
         }
@@ -52,4 +61,3 @@ class CandidateAdapter(private val candidates: List<Candidate>) :
         return candidates.size
     }
 }
-
