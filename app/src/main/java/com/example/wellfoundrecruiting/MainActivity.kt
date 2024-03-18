@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().getReference("users")
         fetchConnectedUsersPosts()
 
-        // Navigate to MainActivity
+
         floatingHomeBtn.setOnClickListener {
             startActivity(Intent(this, CandidateActivity::class.java))
         }

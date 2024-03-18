@@ -2,7 +2,7 @@ package com.example.wellfoundrecruiting
 
 import Candidate
 import android.content.Intent
-import android.util.Log
+import android.util.Log // Import for logging purposes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +24,14 @@ class CandidateAdapter(private val candidates: List<Candidate>) :
         fun bind(candidate: Candidate) {
             // Load user image from Firebase Storage using Glide
             val storageReference = FirebaseStorage.getInstance().reference
-            println(candidate.photo_url)
+            println(candidate.photo_url) // Print the photo URL for debugging
             val imageRef = storageReference.child("${candidate.photo_url}.jpeg") // Assuming images are JPEGs
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 Glide.with(itemView)
                     .load(uri)
                     .into(userImageView)
             }.addOnFailureListener { exception ->
-                 Log.e("CandidateAdapter", "Error loading image: ${exception.message}")
+                Log.e("CandidateAdapter", "Error loading image: ${exception.message}") // Log error if image loading fails
             }
 
             nameTextView.text = candidate.name
@@ -40,7 +40,7 @@ class CandidateAdapter(private val candidates: List<Candidate>) :
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, CandidateDetailActivity::class.java)
-                intent.putExtra("candidate_id", candidate.id) // Passing candidate ID
+                intent.putExtra("candidate_id", candidate.id) // Passing candidate ID to detail activity
                 itemView.context.startActivity(intent)
             }
         }
