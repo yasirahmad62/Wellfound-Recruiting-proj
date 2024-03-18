@@ -1,10 +1,14 @@
 package com.example.wellfoundrecruiting
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class CandidateDetailActivity : AppCompatActivity() {
@@ -23,6 +27,8 @@ class CandidateDetailActivity : AppCompatActivity() {
         val cityTextView = findViewById<TextView>(R.id.cityTextView)
         val educationTextView = findViewById<TextView>(R.id.educationTextView)
         val userImageView = findViewById<ImageView>(R.id.userImageView)
+        val addConnectionButton = findViewById<FloatingActionButton>(R.id.addConnectionButton)
+        val connectionStatusTextView = findViewById<TextView>(R.id.connectionStatusTextView)
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -43,11 +49,45 @@ class CandidateDetailActivity : AppCompatActivity() {
                 Glide.with(this@CandidateDetailActivity)
                     .load(photoUrl)
                     .into(userImageView)
+
+                val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+                if (currentUserUid != null) {
+                    val userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserUid)
+                    userRef.child("connections").addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists() && snapshot.children.any { it.getValue(String::class.java) == candidateId }) {
+                                connectionStatusTextView.visibility = View.VISIBLE
+                                addConnectionButton.visibility = View.GONE
+                            } else {
+                                addConnectionButton.visibility = View.VISIBLE
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            // Handle error
+                        }
+                    })
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // Handle error
             }
         })
+
+        addConnectionButton.setOnClickListener {
+            val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+            if (currentUserUid != null) {
+                val userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserUid)
+                userRef.child("connections").push().setValue(candidateId)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this@CandidateDetailActivity, "Candidate added to connections", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this@CandidateDetailActivity, "Failed to add candidate to connections", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
+        }
     }
 }

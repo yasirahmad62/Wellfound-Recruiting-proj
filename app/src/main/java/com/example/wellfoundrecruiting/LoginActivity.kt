@@ -33,27 +33,13 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener {
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
-
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val user = auth.currentUser
-                            val database = FirebaseDatabase.getInstance()
-                            val userRef = database.getReference("users").child(user!!.uid)
-                            userRef.addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                    val firstName = dataSnapshot.child("firstName").getValue(String::class.java)
-                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                    intent.putExtra("firstName", firstName)
-                                    startActivity(intent)
-                                    finish()
-                                }
-
-                                override fun onCancelled(databaseError: DatabaseError) {
-                                    // Handle errors
-                                }
-                            })
+                            startActivity(Intent(this@LoginActivity, CandidateActivity::class.java))
+                            finish()
                         } else {
                             Toast.makeText(
                                 this@LoginActivity,
